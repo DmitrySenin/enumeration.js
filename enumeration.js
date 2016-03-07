@@ -67,6 +67,22 @@
 			return this.id - enumItem.id;
 		}
 
+		/**
+		 * Convert item of enumeration to string.
+		 * @return {String} String representation of enumeration's item.
+		 */
+		Enumeration.prototype.toString = function() {
+			return this.name;
+		}
+
+		/**
+		 * Convert item of enumeration to number.
+		 * @return {Numeric} Numeric representation of enumeration's item.
+		 */
+		Enumeration.prototype.valueOf = function() {
+			return this.id;
+		}
+
 		return Enumeration;
 	};
 
