@@ -56,6 +56,17 @@
 			maybeFreeze(this, Enumeration);
 		}
 
+		/**
+		 * Compare 'this' with another item of enumeration by Id.
+		 * @param {Enumeration} enumItem Object to compare with.
+		 * @return {Numeric} Negative value if 'this' less than given object.
+		 *                            Positive value if 'this' greater than given object.
+		 *                            Zero if 'this' equal to given object.
+		 */
+		Enumeration.prototype.CompareTo = function(enumItem) {
+			return this.id - enumItem.id;
+		}
+
 		return Enumeration;
 	};
 
