@@ -64,4 +64,14 @@ If you want that your enumeration's items have additional properties, methods an
 			Color.constructor = Color; // don't forget this!!!
 
 		Now all Color enumeration's items have additional property hexCode:
-			var Red = new Color(0, 'Red', 'ff0000'); 
+			var Red = new Color(0, 'Red', 'ff0000');
+
+3. Built-in functionality
+
+	3.1. Comparison (see 1.4 above)
+
+	3.2. toString
+		All items created by enumeration constructor have overridden toString method which return name of item.
+
+	3.3. valueOf
+		All items created by enumeration constructor have overridden value method which return id of item.
