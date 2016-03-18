@@ -4,7 +4,7 @@ EnumerationJS is simple implementation of enumeration in JavaScript.
 
 	1.1. Include
 
-	To use include the library in browser code just create script tag:
+	To include the library in browser code just create script tag:
 		<script type="text/javascript" src="<path to EnumerationJS file>">
 
 	1.2. Create new enumeration
@@ -42,3 +42,25 @@ EnumerationJS is simple implementation of enumeration in JavaScript.
 
 	var Red = Color(0, 'Red');
 	var Blue = Color(0, 'Blue'); // !!throws Error!!
+
+2. Extensions
+
+All that said above is simple usage of EnumerationJS. 
+If you want that your enumeration's items have additional properties, methods and so on than this chapter for you.
+
+	2.1. Add properties
+		a. Create enumeration instance:
+			var BaseEnum = enumeration.create();
+		b. Create special constructor of your enumeration:
+			function Color(id, name, hexCode) {
+				BaseEnum.apply(this, id, name);
+				this.hexCode = hexCode;
+				BaseEnum.maybeFreeze(this, Color); // this is necessary to freeze object if it's created by Color-constructor.
+			}
+			It must give id and name as parameters.
+		c. Set prototype:
+			Color.prototype = Object.create(BaseEnum);
+			Color.constructor = Color; // don't forget this!!!
+
+		Now all Color enumeration's items have additional property hexCode:
+			var Red = new Color(0, 'Red', 'ff0000');
