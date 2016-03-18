@@ -75,3 +75,12 @@ If you want that your enumeration's items have additional properties, methods an
 
 	3.3. valueOf
 		All items created by enumeration constructor have overridden value method which return id of item.
+
+4. Advices
+
+	4.1. Enumeration's items storage
+		I am sure that good style is store all-in-one.
+		So, the following code shows this style:
+			var color = enumeration.create();
+			color.Red = new Color(0, 'Red');
+			color.Blue = new Color(0, 'Blue');
