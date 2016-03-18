@@ -35,17 +35,25 @@
 
 		/**
 		 * Constructor of enumeration.
-		 * @param {Numeric} id   Unique identifier of item of enumeration.
 		 * @param {String} name Name of enumeration's item.
+		 * @param {Numeric} id   Unique identifier of item of enumeration.
 		 */
-		function Enumeration(id, name) {
+		function Enumeration(name, id) {
 
-			if(!isNumeric(id)) {
-				throw new Error(message_list.idNotNumeric);
+			// if id was passed as parameter
+			// then check it
+			// else get last from id_list and increase it by one, or set 0 if no ids yet.
+			if(arguments.length > 1) {
+				if(!isNumeric(id)) {
+					throw new Error(message_list.idNotNumeric);
+				}
+
+				if(id_list.indexOf(+id) >= 0) {
+					throw new Error(message_list.idExists);
+				}
 			}
-
-			if(id_list.indexOf(+id) >= 0) {
-				throw new Error(message_list.idExists);
+			else {
+				id = id_list.length ? id_list[id_list.length - 1] + 1 : 0;
 			}
 
 			id_list.push(+id);

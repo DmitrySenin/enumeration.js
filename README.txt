@@ -17,8 +17,8 @@ EnumerationJS is simple implementation of enumeration in JavaScript.
 	1.3. Create enumeration's items.
 
 		To create new item just write code like below:
-		var Red = Color(0, 'Red');
-		var Blue = Color(1, 'Blue');
+		var Red = Color('Red', 0);
+		var Blue = Color('Blue', 1);
 
 		Red and Blue are frozen objects that represent enumeration's items. Frozen means that after creation you can't change its properties.
 
@@ -40,8 +40,9 @@ EnumerationJS is simple implementation of enumeration in JavaScript.
 		Enumeration object has built-in check of unique identifiers.
 		So you can't create several items with one Id.
 
-		var Red = Color(0, 'Red');
-		var Blue = Color(0, 'Blue'); // !!throws Error!!
+		var Red = Color('Red', 0);
+		var Blue = Color('Blue', 0); // !!throws Error!!
+
 
 2. Extensions
 
@@ -51,20 +52,36 @@ If you want that your enumeration's items have additional properties, methods an
 	2.1. Add properties
 
 		a. Create enumeration instance:
+
 			var BaseEnum = enumeration.create();
+
 		b. Create special constructor of your enumeration:
-			function Color(id, name, hexCode) {
-				BaseEnum.apply(this, id, name);
+
+			function Color(name, hexCode, id) {
+
+				// check that id was passed
+				// else autoincrement will be applied
+				if(arguments.length > 2) {
+					BaseEnum.call(this, name, id);
+				} else {
+					BaseEnum.call(this, name);
+				}
+
 				this.hexCode = hexCode;
-				BaseEnum.maybeFreeze(this, Color); // this is necessary to freeze object if it's created by Color-constructor.
+
+				// this is necessary to freeze object if it's created by Color-constructor.
+				enumeration.maybeFreeze(this, Color);
 			}
+
 			It must give id and name as parameters.
+
 		c. Set prototype:
+
 			Color.prototype = Object.create(BaseEnum);
 			Color.constructor = Color; // don't forget this!!!
 
 		Now all Color enumeration's items have additional property hexCode:
-			var Red = new Color(0, 'Red', 'ff0000');
+			var Red = new Color('Red', 'ff0000', 0);
 
 3. Built-in functionality
 
@@ -75,6 +92,21 @@ If you want that your enumeration's items have additional properties, methods an
 
 	3.3. valueOf
 		All items created by enumeration constructor have overridden value method which return id of item.
+
+	3.4. Autoincrement
+
+		You don't need specified id when invoke enumeration's constructor
+		since it can be increased automatically.
+		The following rules use built-in autoincrement:
+			a. if there is no item in enumeration yet then set id as 0
+			b. if there is at least one item then get last and set last item's id plus 1
+
+		The following code demonstrates work of autoincrement:
+			var numbers = enumeration.create();
+
+			numbers.One = new numbers('Zero'); // id = 0
+			numbers.Two = new numbers('Two', 2); // id = 2
+			numbers.Three = new numbers('Three'); // id = 3
 
 4. Advices
 
