@@ -60,6 +60,7 @@ If you want that your enumeration's items have additional properties, methods an
 			function Color(name, hexCode, id) {
 
 				// check that id was passed
+				// else autoincrement will be applied
 				if(arguments.length > 2) {
 					BaseEnum.call(this, name, id);
 				} else {
@@ -91,6 +92,21 @@ If you want that your enumeration's items have additional properties, methods an
 
 	3.3. valueOf
 		All items created by enumeration constructor have overridden value method which return id of item.
+
+	3.4. Autoincrement
+
+		You don't need specified id when invoke enumeration's constructor
+		since it can be increased automatically.
+		The following rules use built-in autoincrement:
+			a. if there is no item in enumeration yet then set id as 0
+			b. if there is at least one item then get last and set last item's id plus 1
+
+		The following code demonstrates work of autoincrement:
+			var numbers = enumeration.create();
+
+			numbers.One = new numbers('Zero'); // id = 0
+			numbers.Two = new numbers('Two', 2); // id = 2
+			numbers.Three = new numbers('Three'); // id = 3
 
 4. Advices
 
