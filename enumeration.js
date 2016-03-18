@@ -35,10 +35,11 @@
 
 		/**
 		 * Constructor of enumeration.
+		 * @param {String} name Name of enumeration's item.
 		 * @param {Numeric} id   Unique identifier of item of enumeration.
 		 * @param {String} name Name of enumeration's item.
 		 */
-		function Enumeration(id, name) {
+		function Enumeration(name, id) {
 
 			if(!isNumeric(id)) {
 				throw new Error(message_list.idNotNumeric);
